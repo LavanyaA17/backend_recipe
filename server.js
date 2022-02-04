@@ -23,7 +23,10 @@ app
 .route("/recipes")
 .get((req, res) => {
     Recipe.find({})
-    .then((result) =>{ console.log("result",result);return res.send(result)})
+    .then((result) =>{ 
+    console.log("result",result);
+    return res.status(200).send(result)
+})
     .catch((e) => 
     {
      console.log(e);
@@ -33,7 +36,7 @@ app
 .post((req, res) => {
     console.log(req.body);
     Recipe.create(req.body)
-    .then((result) => res.send(result))
+    .then((result) => res.status(200).send(result))
     .catch((e) => 
     {
      console.log(e);
