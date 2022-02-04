@@ -10,7 +10,7 @@ import cors from "cors";
 //import mongoose from 'mongoose';
 const app = express();
 app.use(cors());
-const port = 3020;
+const port = process.env.PORT || 3020
 app.use(express.json());
 
 mongoose
@@ -18,15 +18,16 @@ mongoose
 .then((e) => console.log("Connected to the databse", e))
 .catch((e) => console.log("Error", e));
 
+app.get("/",(req,res)=>res.status(200).send("Welcome to the recipes API"))
 app
-.route("/")
+.route("/recipes")
 .get((req, res) => {
     Recipe.find({})
-    .then((result) => res.send(result))
+    .then((result) =>{ console.log("result",result);return res.send(result)})
     .catch((e) => 
     {
      console.log(e);
-    res.send({ error: true});
+   return res.send({ error: true});
 });
 })
 .post((req, res) => {
@@ -36,13 +37,13 @@ app
     .catch((e) => 
     {
      console.log(e);
-    res.send({ error: true});
+   return  res.send({ error: true});
     });
 })
 
 
-.put((req, res) => {})
-.delete((req, res) => {});
+// .put((req, res) => {})
+// .delete((req, res) => {});
 
 
 app.listen(port, () => {
